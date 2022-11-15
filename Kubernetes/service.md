@@ -1,0 +1,2 @@
+# service 的服务发现
+>   通常，Cluster地址是Service创建之后由Kubernetes系统分配的，其他Pod无法预先知道某个Service的ClusterIP地址，因此需要一个服务发现机制来找到这个服务。为此Kubernetes最初巧妙的使用了Linux环境变量（Environment Variable）来解决这个问题。根据Service的唯一名称，容器可以从环境变量中获取Service对应的ClusterIp地址和端口号，从而发起TCP/IP连接请求。
