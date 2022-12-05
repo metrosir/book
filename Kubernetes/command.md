@@ -1,7 +1,7 @@
 ## 标签（label）
 
 ### 给节点打上标签
-kubectl label nodes m1 node=master 
+- kubectl label nodes m1 node=master 
 
 ### 查看node上的标签
 kubectl get node --show-labels
@@ -46,8 +46,8 @@ kubectl label pods web version=1.0
 # 污点类
 
 ## 添加污点
-kubectl taint node k8s-node1 kubeedge="":NoExecute
-kubectl taint node k8s-node1 kubeedge="":NoSchedule
+> kubectl taint node k8s-node1 kubeedge="":NoExecute
+> kubectl taint node k8s-node1 kubeedge="":NoSchedule
 
 ## 删除污点
 kubectl taint node k8s-node1 kubeedge-
