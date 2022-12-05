@@ -1,0 +1,49 @@
+kind: Service
+apiVersion: v1
+metadata: 
+  name: financono
+  namespace: my-apps
+  labels: 
+    app: financono
+spec: 
+  ports: 
+    - 
+      name: port
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  selector: 
+    app: financono
+  type: ClusterIP
+  sessionAffinity: None
+  ipFamilies: 
+    - IPv4
+  ipFamilyPolicy: SingleStack
+
+---
+
+kind: Service
+apiVersion: v1
+metadata: 
+  name: financoco
+  namespace: my-apps
+  labels: 
+    app: financoco
+spec: 
+  ports: 
+    - 
+      name: port
+      protocol: TCP
+      port: 8080
+      targetPort: 80
+      nodePort: 30010
+  selector: 
+    app: financoco
+  type: NodePort
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+  ipFamilies: 
+    - IPv4
+  ipFamilyPolicy: SingleStack
+status: 
+  loadBalancer: {}

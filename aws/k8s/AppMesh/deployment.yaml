@@ -1,0 +1,98 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata: 
+  name: financono
+  namespace: my-apps
+  labels: 
+    app: financono
+spec: 
+  replicas: 4
+  selector: 
+    matchLabels: 
+      app: financono
+  template: 
+    metadata: 
+      creationTimestamp: null
+      annotations:
+        appmesh.k8s.aws/sidecarInjectorWebhook: enabled
+      labels: 
+        app: financono
+    spec: 
+      containers: 
+        - 
+          name: financono
+          image: zhengqilin/go_project:1.16_02
+          ports: 
+            - 
+              name: port
+              containerPort: 3001
+              protocol: TCP
+          resources: 
+            limits: 
+              cpu: 50m
+              memory: 50M
+            requests: 
+              cpu: 25m
+              memory: 25M
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy: 
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+---
+
+
+
+kind: Deployment
+apiVersion: apps/v1
+metadata: 
+  name: financoco
+  namespace: my-apps
+  labels: 
+    app: financoco
+spec: 
+  replicas: 4
+  selector: 
+    matchLabels: 
+      app: financoco
+  template: 
+    metadata: 
+      creationTimestamp: null
+      annotations:
+        appmesh.k8s.aws/sidecarInjectorWebhook: enabled
+      labels: 
+        app: financoco
+    spec: 
+      containers: 
+        - 
+          name: financoco
+          image: zhengqilin/php_project:v7.3.33_01
+          ports: 
+            - 
+              name: port
+              containerPort: 80
+              protocol: TCP
+          resources: 
+            limits: 
+              cpu: 100m
+              memory: 100M
+            requests: 
+              cpu: 25m
+              memory: 25M
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy: 
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%

@@ -1,0 +1,64 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualNode
+metadata:
+  finalizers:
+  - finalizers.appmesh.k8s.aws/aws-appmesh-resources
+  generation: 1
+  name: financoco
+  namespace: my-apps
+  resourceVersion: "27205923"
+  uid: 0df7c609-3393-4c29-a554-e067df3a2186
+spec:
+  awsName: financoco_my-apps
+  listeners:
+  - portMapping:
+      port: 80
+      protocol: http
+  #meshRef:
+  #  name: finan_mesh
+  #  uid: b14cf92d-d2f4-4417-acb0-241e1d653587
+  podSelector:
+    matchLabels:
+      app: financoco
+  serviceDiscovery:
+    dns:
+      hostname: financoco.my-apps.svc.cluster.local
+status:
+  conditions:
+  - type: VirtualNodeActive
+  observedGeneration: 1
+  virtualNodeARN: arn:aws:appmesh:us-east-1:726939051292:mesh/finan_mesh/virtualNode/financoco_my-apps
+
+
+  --- 
+
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualNode
+metadata:
+  finalizers:
+  - finalizers.appmesh.k8s.aws/aws-appmesh-resources
+  generation: 1
+  name: financono
+  namespace: my-apps
+spec:
+  awsName: financono_my-apps
+  listeners:
+  - portMapping:
+      port: 80
+      protocol: http
+  podSelector:
+    matchLabels:
+      app: financono
+  serviceDiscovery:
+    dns:
+      hostname: financono.my-apps.svc.cluster.local
+status:
+  conditions:
+  - type: VirtualNodeActive
+  observedGeneration: 1
+  virtualNodeARN: arn:aws:appmesh:us-east-1:726939051292:mesh/finan_mesh/virtualNode/financono_my-apps
+

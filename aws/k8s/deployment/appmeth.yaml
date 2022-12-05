@@ -1,0 +1,112 @@
+---
+  spec: 
+    deployment: 
+      spec: 
+        replicas: 1
+        selector: 
+          matchLabels: 
+            app: "financoco"
+        template: 
+          metadata: 
+            annotations:
+                appmesh.k8s.aws/sidecarInjectorWebhook: enabled
+            creationTimestamp: null
+            labels: 
+              app: "financoco"
+          spec: 
+            containers: 
+              - 
+                name: "financoco"
+                image: "zhengqilin/php_project:v7.3.33_01"
+                ports: 
+                  - 
+                    name: "port1"
+                    containerPort: 8080
+                    protocol: "TCP"
+                resources: 
+                  limits: 
+                    cpu: "100m"
+                    memory: "100M"
+                  requests: 
+                    cpu: "51m"
+                    memory: "51M"
+                  cpuOversell: 51
+                  memOversell: 51
+                terminationMessagePath: "/dev/termination-log"
+                terminationMessagePolicy: "File"
+                imagePullPolicy: "IfNotPresent"
+            restartPolicy: "Always"
+            terminationGracePeriodSeconds: 30
+            dnsPolicy: "ClusterFirst"
+            securityContext: {}
+            schedulerName: "default-scheduler"
+            tolerations: []
+            hostAliases: []
+            imagePullSecrets: []
+        strategy: 
+          type: "RollingUpdate"
+          rollingUpdate: 
+            maxUnavailable: 0
+            maxSurge: 1
+        revisionHistoryLimit: 10
+        progressDeadlineSeconds: 600
+    pod: null
+    type: "Deployment"
+    hpa: null
+    services: 
+      - 
+        metadata: 
+          name: "coco"
+          annotations: 
+            ingress-access-type: "host"
+            ingress-host: ""
+            ingress-port: ""
+            ingress-subpath: ""
+            scheme-type: "internet-facing,internal"
+        spec: 
+          ports: 
+            - 
+              name: "port1"
+              protocol: "TCP"
+              port: 8080
+              targetPort: 80
+              nodePort: 30001
+          selector: 
+            app: "financoco"
+          clusterIP: "172.20.163.139"
+          clusterIPs: 
+            - "172.20.163.139"
+          type: "NodePort"
+          sessionAffinity: "None"
+          externalTrafficPolicy: "Cluster"
+          ipFamilies: 
+            - "IPv4"
+          ipFamilyPolicy: "SingleStack"
+      - 
+        metadata: 
+          name: "financoco"
+          annotations: 
+            ingress-access-type: "host"
+            ingress-host: ""
+            ingress-port: ""
+            ingress-subpath: ""
+            scheme-type: "internet-facing,internal"
+        spec: 
+          ports: 
+            - 
+              name: "port1"
+              protocol: "TCP"
+              port: 8080
+              targetPort: 80
+              nodePort: 30094
+          selector: 
+            app: "financoco"
+          clusterIP: "172.20.195.91"
+          clusterIPs: 
+            - "172.20.195.91"
+          type: "NodePort"
+          sessionAffinity: "None"
+          externalTrafficPolicy: "Cluster"
+          ipFamilies: 
+            - "IPv4"
+          ipFamilyPolicy: "SingleStack"
