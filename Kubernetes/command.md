@@ -46,8 +46,8 @@ kubectl label pods web version=1.0
 # 污点类
 
 ## 添加污点
-> kubectl taint node k8s-node1 kubeedge="":NoExecute
-> kubectl taint node k8s-node1 kubeedge="":NoSchedule
+- kubectl taint node k8s-node1 kubeedge="":NoExecute
+- kubectl taint node k8s-node1 kubeedge="":NoSchedule
 
 ## 删除污点
 kubectl taint node k8s-node1 kubeedge-
